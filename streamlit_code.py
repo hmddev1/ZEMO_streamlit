@@ -3,7 +3,7 @@ import numpy as np
 import math
 from numpy.linalg import lstsq, matrix_rank, norm
 
-st.title("iFiMAS (The best Financial Markets Analysis System)")
+st.title("Reconstruct images by ZEMO")
 
 uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
 
