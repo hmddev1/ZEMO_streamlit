@@ -10,7 +10,6 @@ for uploaded_file in uploaded_files:
 
 
 fig, axes = plt.subplots(nrows=4, ncols=1, figsize=(6, 6))
-plt.subplot(1, 4, 1)
 plt.imshow(bytes_data, interpolation='nearest', cmap='bone')
 plt.title('Original Image', fontsize=9)
 plt.axis('off')
@@ -26,5 +25,4 @@ for i in range(3):
     plt.title('$P_{max}$=' + str(Order[i]), fontsize=9)
     plt.axis('off')
 
-# Display the Matplotlib plot in Streamlit
 st.pyplot(fig)
