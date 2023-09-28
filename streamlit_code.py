@@ -5,7 +5,6 @@ import ZEMO
 
 st.title("iFiMAS (The best Financial Markets Analysis System)")
 
-symbol = st.sidebar.text_input("Enter a crypto symbol:")
 uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
 
 for uploaded_file in uploaded_files:
