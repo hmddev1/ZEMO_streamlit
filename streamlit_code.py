@@ -1,7 +1,7 @@
 import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-from ZEMO import zemo 
+# import numpy as np
+# import matplotlib.pyplot as plt
+# from ZEMO import zemo 
 
 uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
 for uploaded_file in uploaded_files:
