@@ -1,20 +1,20 @@
 import streamlit as st
 import numpy as np
-import cv2
 import math
-from numpy.linalg import lstsq, matrix_rank, norm
+import cv2 
 
-st.title("Reconstruct images by ZEMO")
+st.title("iFiMAS (The best Financial Markets Analysis System)")
 
 uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
 
 for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
     st.write("filename:", uploaded_file.name)
+
     nparr = np.frombuffer(bytes_data, np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-st.image(image, caption='Original Image')
+st.image(image, caption='Original Image')  
 
 
 def zernike_order_list(order,*withneg):
@@ -234,15 +234,13 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
                 I =I + np.conj(Z[ieq]) * np.conj(bf[:,:,ieq])
 
     I = I.real   
-
     return I
 
 Order = st.text_input("Enter an Order number:")
+
 if st.button("Make the reconstructed image:"):
    SZ = int(np.shape(image)[0])
    ZBFSTR = zernike_bf(SZ, Order, 1)
    Z = zernike_mom(np.double(image), ZBFSTR)
    I = zernike_rec(Z, SZ, ZBFSTR)
-
-
-st.image(I)
+   st.image(I)
