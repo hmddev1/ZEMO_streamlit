@@ -8,9 +8,8 @@ for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
     st.write("filename:", uploaded_file.name)
 
-fig, ax = plt.subplots()
-im = ax.imshow(bytes_data)
-st.pyplot()
+st.image(bytes_data)
+
 
 
 # fig, axes = plt.subplots(nrows=4, ncols=1,figsize=(6,6))
