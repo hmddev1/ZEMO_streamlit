@@ -9,13 +9,10 @@ uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
 for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
     st.write("filename:", uploaded_file.name)
+    st.image(bytes_data, caption='Original Image')  
 
-    nparr = np.frombuffer(bytes_data, np.uint8)
-    # Assuming the image is in grayscale format (1 channel)
-    # If it's a color image, adjust the shape accordingly (e.g., (height, width, 3) for RGB)
-
-st.image(nparr, caption='Original Image')  
-
+    parr = np.frombuffer(bytes_data, np.uint8)
+    image = parr.reshape(-1, 3)
 
 def zernike_order_list(order,*withneg):
     
