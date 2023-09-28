@@ -1,2 +1,3 @@
 ZEMO
 matplotlib
+cv2
