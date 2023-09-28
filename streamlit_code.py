@@ -236,9 +236,8 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 Order = st.sidebar.text_input("Enter an Order number:")
 
 SZ=np.shape(bytes_data)
-for i in range(3):
-   ZBFSTR=zernike_bf(SZ[0],Order[i],1)
-   Z=zernike_mom(np.double(bytes_data),ZBFSTR)
-   I=zernike_rec(Z,SZ[0],ZBFSTR)
+ZBFSTR=zernike_bf(SZ[0],Order,1)
+Z=zernike_mom(np.double(bytes_data),ZBFSTR)
+I=zernike_rec(Z,SZ[0],ZBFSTR)
 
 st.image(I)
