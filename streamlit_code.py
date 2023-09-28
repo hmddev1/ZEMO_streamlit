@@ -9,13 +9,8 @@ for uploaded_file in uploaded_files:
     st.write("filename:", uploaded_file.name)
 
 fig, ax = plt.subplots()
-ax.imshow(bytes_data, cmap='gray') 
-
-ax.set_xlabel('X Label')
-ax.set_ylabel('Y Label')
-ax.set_title('Matplotlib Image')
-
-st.pyplot(fig)
+im = ax.imshow(bytes_data)
+st.pyplot()
 
 
 # fig, axes = plt.subplots(nrows=4, ncols=1,figsize=(6,6))
