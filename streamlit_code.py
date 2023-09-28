@@ -1,5 +1,7 @@
 import streamlit as st
 import numpy as np
+import math
+from numpy.linalg import lstsq, matrix_rank, norm
 
 st.title("iFiMAS (The best Financial Markets Analysis System)")
 
@@ -9,16 +11,8 @@ for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
     st.write("filename:", uploaded_file.name)
 
-Order = st.sidebar.text_input("Enter an Order number:")
-
 st.image(bytes_data, caption='Original Image')
 
-import math
-import numpy as np
-from numpy.linalg import lstsq, matrix_rank, norm
-
-
-"""**Order list func.:**"""
 
 def zernike_order_list(order,*withneg):
     
@@ -56,8 +50,6 @@ def zernike_order_list(order,*withneg):
     # Return the generated lists of factorials, p-indices, and q-indices
     return F,P,Q
 
-"""**Robust fact quot func.:**"""
-
 def robust_fact_quot(X,Y):
       
       # Remove common elements from X and Y
@@ -82,8 +74,6 @@ def robust_fact_quot(X,Y):
       for k in range(l1,l2):
             R=R/Y[k]
       return R
-
-"""**bf func.:**"""
 
 def zernike_bf(SZ, order, *withneg):
 
@@ -167,7 +157,6 @@ def zernike_bf(SZ, order, *withneg):
   ZBFSTR=Zer(order, pq, pqind,ZBF,withneg)
   return ZBFSTR
 
-"""**Moment func.:**"""
 
 def zernike_mom(I, ZBFSTR):
 
@@ -193,7 +182,6 @@ def zernike_mom(I, ZBFSTR):
 
     return Z
 
-"""**Recostruct func.:**"""
 
 def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 
@@ -245,6 +233,7 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 
     return I
 
+Order = st.sidebar.text_input("Enter an Order number:")
 
 SZ=np.shape(bytes_data)
 for i in range(3):
