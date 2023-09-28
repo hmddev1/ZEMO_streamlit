@@ -18,6 +18,8 @@ if uploaded_image is not None:
     
     width, height = image.size
     st.write(f"Image Dimensions: {width}x{height}")
+    SZ = np.array([width, height])
+
 
 
 def zernike_order_list(order,*withneg):
@@ -242,7 +244,7 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 Order = st.text_input("Enter an Order number:")
 
 if st.button("Make the reconstructed image:"):
-   ZBFSTR=zernike_bf(image.size[0],Order,1)
+   ZBFSTR=zernike_bf(SZ[0],Order,1)
    Z = zernike_mom(np.double(image), ZBFSTR)
-   I = zernike_rec(Z, image.size, ZBFSTR)
+   I = zernike_rec(Z, SZ, ZBFSTR)
    st.image(I)
