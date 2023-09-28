@@ -8,21 +8,30 @@ for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
     st.write("filename:", uploaded_file.name)
 
+fig, ax = plt.subplots()
+ax.imshow(bytes_data, cmap='gray') 
 
-fig, axes = plt.subplots(nrows=4, ncols=1, figsize=(6, 6))
-plt.imshow(bytes_data, interpolation='nearest', cmap='bone')
-plt.title('Original Image', fontsize=9)
-plt.axis('off')
-SZ = np.shape(bytes_data)
-Order = [10, 45, 46]
-
-for i in range(3):
-    ZBFSTR = zemo.zernike_bf(SZ[0], Order[i], 1)
-    Z = zemo.zernike_mom(np.double(bytes_data), ZBFSTR)
-    I = zemo.zernike_rec(Z, SZ[0], ZBFSTR)
-    plt.subplot(1, 4, i + 2)
-    plt.imshow(I, interpolation='nearest', cmap='bone')
-    plt.title('$P_{max}$=' + str(Order[i]), fontsize=9)
-    plt.axis('off')
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_title('Matplotlib Image')
 
 st.pyplot(fig)
+
+
+# fig, axes = plt.subplots(nrows=4, ncols=1,figsize=(6,6))
+# plt.subplot(1,4,1)
+# plt.imshow(bytes_data, interpolation='nearest',cmap='bone')
+# plt.title('Original Image', fontsize=9)
+# plt.axis('off')
+# SZ=np.shape(bytes_data)
+# Order=[10,45,46]
+
+# for i in range(3):
+#    ZBFSTR=zemo.zernike_bf(SZ[0],Order[i],1)
+#    Z=zemo.zernike_mom(np.double(bytes_data),ZBFSTR)
+#    I=zemo.zernike_rec(Z,SZ[0],ZBFSTR)
+#    plt.subplot(1,4,i+2)
+#    plt.imshow(I,interpolation='nearest',cmap='bone')
+#    plt.title('$P_{max}$='+ str(Order[i]), fontsize=9)
+#    plt.axis('off')
+# plt.show()
