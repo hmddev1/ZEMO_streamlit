@@ -4,15 +4,21 @@ import math
 
 st.title("ZEMO")
 
-uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
+import streamlit as st
+from PIL import Image
+import io
 
-for uploaded_file in uploaded_files:
-    bytes_data = uploaded_file.read()
-    st.write("filename:", uploaded_file.name)
-    st.image(bytes_data, caption='Original Image')  
+st.title("Image Shape Detector")
 
-width, height = bytes_data.size
-st.write(f"Image Dimensions: {width}x{height}")
+uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+
+if uploaded_image is not None:
+    image = Image.open(uploaded_image)
+    st.image(image, caption="Uploaded Image", use_column_width=True)
+    
+    width, height = image.size
+    st.write(f"Image Dimensions: {width}x{height}")
+
 
 def zernike_order_list(order,*withneg):
     
