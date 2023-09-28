@@ -11,8 +11,6 @@ for uploaded_file in uploaded_files:
     st.write("filename:", uploaded_file.name)
     st.image(bytes_data, caption='Original Image')  
 
-    parr = np.frombuffer(bytes_data, np.uint8)
-
 def zernike_order_list(order,*withneg):
     
     # Calculate the total number of input arguments
@@ -235,7 +233,7 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 Order = st.text_input("Enter an Order number:")
 
 if st.button("Make the reconstructed image:"):
-   SZ=np.shape(parr)
+   SZ=np.shape(bytes_data)
    st.write(SZ)
    # ZBFSTR=zernike_bf(SZ[0],Order,1)
    # Z = zernike_mom(np.double(bytes_data), ZBFSTR)
