@@ -233,7 +233,7 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 
     return I
 
-Order = st.sidebar.text_input("Enter an Order number:")
+Order = st.text_input("Enter an Order number:")
 
 if st.sidebar.button("Make the reconstructed image:"):
    SZ=np.shape(bytes_data)
