@@ -145,14 +145,15 @@ def zernike_bf(SZ, order, *withneg):
             for s in range(0,int((m-abs(n))/2) +1):
               R=R+Rmns[order+m,order+n,s]*(rho**(m-2*s))
             ZBF[y-1,x-1,flat] = R*np.exp(n*theta*1j);
-  pq = (np.array(P), np.array(Q))
+  pq = (P, Q)
   class Zer:
-    def __init__(self, ORDER, pq, pqind, ZBF, withneg):
-        self.maxorder = ORDER
-        self.withneg = withneg
-        self.orders = pq
-        self.index = pqind
-        self.bf = ZBF
+   def __init__(self, ORDER, pq, pqind, ZBF, withneg):
+         
+            self.maxorder = ORDER
+            self.withneg = withneg
+            self.orders = pq
+            self.index = pqind
+            self.bf = ZBF
 
   ZBFSTR = Zer(order, pq, pqind, ZBF, withneg)
   return ZBFSTR
@@ -235,9 +236,10 @@ def zernike_rec(Z, SZ, ZBFSTR, *OPTSTARTIND):
 
 Order = st.text_input("Enter an Order number:")
 if st.button("Make the reconstructed image:"):
-   SZ=np.shape(bytes_data)
-   ZBFSTR=zernike_bf(SZ[0],Order,1)
-   Z=zernike_mom(np.double(bytes_data),ZBFSTR)
-   I=zernike_rec(Z,SZ[0],ZBFSTR)
+   SZ = int(np.shape(bytes_data)[0])
+   ZBFSTR = zernike_bf(SZ, Order, 1)
+   Z = zernike_mom(np.double(bytes_data), ZBFSTR)
+   I = zernike_rec(Z, SZ, ZBFSTR)
+
 
 st.image(I)
