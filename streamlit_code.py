@@ -1,9 +1,8 @@
 import streamlit as st
 import numpy as np
 import math
-import cv2 
 
-st.title("iFiMAS (The best Financial Markets Analysis System)")
+st.title("ZEMO")
 
 uploaded_files = st.file_uploader("Choose an image", accept_multiple_files=True)
 
@@ -12,9 +11,11 @@ for uploaded_file in uploaded_files:
     st.write("filename:", uploaded_file.name)
 
     nparr = np.frombuffer(bytes_data, np.uint8)
-    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    # Assuming the image is in grayscale format (1 channel)
+    # If it's a color image, adjust the shape accordingly (e.g., (height, width, 3) for RGB)
+    np_image = nparr.reshape((height, width,3))
 
-st.image(image, caption='Original Image')  
+st.image(np_image, caption='Original Image')  
 
 
 def zernike_order_list(order,*withneg):
