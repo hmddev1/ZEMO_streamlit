@@ -11,6 +11,9 @@ for uploaded_file in uploaded_files:
     st.write("filename:", uploaded_file.name)
     st.image(bytes_data, caption='Original Image')  
 
+width, height = bytes_data.size
+st.write(f"Image Dimensions: {width}x{height}")
+
 def zernike_order_list(order,*withneg):
     
     # Calculate the total number of input arguments
