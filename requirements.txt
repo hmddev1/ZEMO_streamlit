@@ -1,2 +1,2 @@
 ZEMO==1.0.0
-matplotlib.pyplot
+matplotlib
