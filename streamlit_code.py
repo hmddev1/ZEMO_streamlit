@@ -11,8 +11,7 @@ for uploaded_file in uploaded_files:
     st.write("filename:", uploaded_file.name)
     st.image(bytes_data, caption='Original Image')  
 
-    parr = np.frombuffer(bytes_data, np.uint8)
-    image = parr.reshape(-1, 3)
+   #  parr = np.frombuffer(bytes_data, np.uint8)
 
 def zernike_order_list(order,*withneg):
     
