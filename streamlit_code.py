@@ -145,16 +145,16 @@ def zernike_bf(SZ, order, *withneg):
             for s in range(0,int((m-abs(n))/2) +1):
               R=R+Rmns[order+m,order+n,s]*(rho**(m-2*s))
             ZBF[y-1,x-1,flat] = R*np.exp(n*theta*1j);
-  pq = np.array([P,Q])
+  pq = (np.array(P), np.array(Q))
   class Zer:
-    def __init__(self, ORDER, pq, pqind,ZBF,withneg):
-       self.maxorder = ORDER
-       self.withneg=withneg
-       self.orders = pq
-       self.index = pqind
-       self.bf = ZBF
+    def __init__(self, ORDER, pq, pqind, ZBF, withneg):
+        self.maxorder = ORDER
+        self.withneg = withneg
+        self.orders = pq
+        self.index = pqind
+        self.bf = ZBF
 
-  ZBFSTR=Zer(order, pq, pqind,ZBF,withneg)
+  ZBFSTR = Zer(order, pq, pqind, ZBF, withneg)
   return ZBFSTR
 
 
