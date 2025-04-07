@@ -2,5 +2,5 @@ streamlit
 Pillow
 numpy
 pandas
-opencv-python
+opencv-python-headless
 ZEMO==1.0.0   
