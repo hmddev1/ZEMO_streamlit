@@ -1,10 +1,6 @@
 import streamlit as st
 from PIL import Image
-import numpy as np
-import pandas as pd
-from ZEMO import zemo
 from zemo_code import calculate_zernike_moments, reconstruct_image
-import io
 import matplotlib.pyplot as plt
 import time
 
