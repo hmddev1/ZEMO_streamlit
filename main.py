@@ -73,7 +73,7 @@ if uploaded_file is not None:
             ax.axis('off')
             ax.set_title(f'Reconstructed Image (Order = {order})')
             
-            st.pyplot(fig)
+            st.image(fig)
             
             st.write("Zernike Moments:")
             st.write(df)
