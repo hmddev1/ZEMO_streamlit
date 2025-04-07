@@ -1,6 +1,10 @@
 import streamlit as st
 from PIL import Image
+import numpy as np
+import pandas as pd
+from ZEMO import zemo
 from zemo_code import calculate_zernike_moments, reconstruct_image
+import io
 import matplotlib.pyplot as plt
 import time
 
@@ -19,7 +23,7 @@ with st.sidebar:
     rotation-invariant precision.
     """)
     
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"], help="Please upload an image with a size less than 2MB and a resolution of 200x200 pixels.")
     
     if uploaded_file is not None:
         order = st.number_input("Enter the Zernike order $P_{max}$:", 
@@ -37,76 +41,84 @@ if uploaded_file is not None:
     else:
         image = Image.open(uploaded_file)
         
-        # Create two columns for images
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.image(image, 
-                    caption='Original Image', 
-                    width=400)
-        
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            calculate_button = st.button("Calculate Zernike Moments", 
-                                      use_container_width=True)
-        
-        if calculate_button:
-            image_size = image.size[0]
-
-            # Start timer
-            start_time = time.time()
+        # Check if image is square
+        if image.width != image.height:
+            st.error("Please upload a square-shaped image (width = height)")
+        else:
+            # Resize image to 200x200
+            image = image.resize((200, 200), Image.Resampling.LANCZOS)
             
-            st.write('Calculating... Please wait.')
-            
-            df, ZBFSTR, Z = calculate_zernike_moments(image, image_size=image_size, zernike_order=order)
-            
-            # Calculate duration
-            duration = time.time() - start_time
-            
-            st.write(f'Done! Calculation took {duration:.2f} seconds.')
-            st.write('Now we are reconstructing the image.')
-            
-            reconstructed = reconstruct_image(Z, image_size=image_size, ZBFSTR=ZBFSTR, show=False)
-            
-            fig, ax = plt.subplots(figsize=(6, 6))
-            ax.imshow(reconstructed, cmap='bone', interpolation='nearest')
-            ax.axis('off')
-            ax.set_title(f'Reconstructed Image (Order = {order})')
-            
-            st.image(fig)
-            
-            st.write("Zernike Moments:")
-            st.write(df)
-            
-            st.write("Download Zernike Moments:")
-            
-            # filename = st.text_input("Enter filename (without extension):", 
-            #                         value="zernike_moments",
-            #                         help="Enter the name for your output file")
-            
+            # Create two columns for images
             col1, col2 = st.columns(2)
             
             with col1:
-                # CSV Download
-                csv = df.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label="Download as CSV",
-                    data=csv,
-                    file_name=f"ZMs_{uploaded_file.name}_order_{order}.csv",
-                    mime="text/csv",
-                    use_container_width=True
-                )
+                st.image(image, 
+                        caption='Original Image (200x200)', 
+                        width=400)
             
+            col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                # TXT Download
-                txt = df.to_csv(index=False, sep='\t').encode('utf-8')
-                st.download_button(
-                    label="Download as TXT",
-                    data=txt,
-                    file_name=f"ZMs_{uploaded_file.name}_order_{order}.csv",
-                    mime="text/plain",
-                    use_container_width=True
-                )
+                calculate_button = st.button("Calculate Zernike Moments", 
+                                          use_container_width=True)
+            
+            if calculate_button:
+                # Fixed image size of 200x200
+                image_size = 200
+
+                # Start timer
+                start_time = time.time()
+                
+                st.write('Calculating... Please wait.')
+                
+                df, ZBFSTR, Z = calculate_zernike_moments(image, image_size=image_size, zernike_order=order)
+                
+                # Calculate duration
+                duration = time.time() - start_time
+                
+                st.write(f'Done! Calculation took {duration:.2f} seconds.')
+                st.write('Now we are reconstructing the image.')
+                
+                reconstructed = reconstruct_image(Z, image_size=image_size, ZBFSTR=ZBFSTR, show=False)
+                
+                fig, ax = plt.subplots(figsize=(6, 6))
+                ax.imshow(reconstructed, cmap='bone', interpolation='nearest')
+                ax.axis('off')
+                ax.set_title(f'Reconstructed Image (Order = {order})')
+                
+                st.pyplot(fig)
+                
+                st.write("Zernike Moments:")
+                st.write(df)
+                
+                st.write("Download Zernike Moments:")
+                
+                filename = st.text_input("Enter filename (without extension):", 
+                                        value="zernike_moments",
+                                        help="Enter the name for your output file")
+                
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    # CSV Download
+                    csv = df.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="Download as CSV",
+                        data=csv,
+                        file_name=f"{filename}.csv",
+                        mime="text/csv",
+                        use_container_width=True
+                    )
+                
+                with col2:
+                    # TXT Download
+                    txt = df.to_csv(index=False, sep='\t').encode('utf-8')
+                    st.download_button(
+                        label="Download as TXT",
+                        data=txt,
+                        file_name=f"{filename}.txt",
+                        mime="text/plain",
+                        use_container_width=True
+                    )
 else:
     st.info("Please upload an image using the sidebar to get started.")
 
