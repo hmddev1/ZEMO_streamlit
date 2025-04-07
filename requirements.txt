@@ -3,4 +3,5 @@ Pillow
 numpy
 pandas
 opencv-python-headless
+matplotlib
 ZEMO==1.0.0   
