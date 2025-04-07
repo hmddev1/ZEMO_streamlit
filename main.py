@@ -92,10 +92,6 @@ if uploaded_file is not None:
                 
                 st.write("Download Zernike Moments:")
                 
-                filename = st.text_input("Enter filename (without extension):", 
-                                        value="zernike_moments",
-                                        help="Enter the name for your output file")
-                
                 col1, col2 = st.columns(2)
                 
                 with col1:
@@ -104,7 +100,7 @@ if uploaded_file is not None:
                     st.download_button(
                         label="Download as CSV",
                         data=csv,
-                        file_name=f"{filename}.csv",
+                        file_name=f"ZMs_{uploaded_file.name}_order_{order}.csv",
                         mime="text/csv",
                         use_container_width=True
                     )
@@ -115,7 +111,7 @@ if uploaded_file is not None:
                     st.download_button(
                         label="Download as TXT",
                         data=txt,
-                        file_name=f"{filename}.txt",
+                        file_name=f"ZMs_{uploaded_file.name}_order_{order}.csv",
                         mime="text/plain",
                         use_container_width=True
                     )
